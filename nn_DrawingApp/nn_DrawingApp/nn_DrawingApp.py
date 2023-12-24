@@ -83,8 +83,6 @@ class DrawingApp:
             label.config(fg="black")
         self.percentage_labels[0].config(fg="blue")
 
-        plt.imshow(np.array(resized_image) / 255.0, cmap='gray')
-
 if __name__ == "__main__":
     # Call the function to load the network
     nn = load_network()
