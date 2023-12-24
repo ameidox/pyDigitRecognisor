@@ -1,18 +1,24 @@
 import tkinter as tk
+from tkinter import filedialog
 from tkinter import Canvas
 from PIL import Image, ImageDraw, ImageOps
 import numpy as np
-import matplotlib.pyplot as plt
+import sys
+import os
 
 from network import NeuralNetwork
 
-print("Welcome to the digit recegnisor by Iddodo!!! press R to reset the drawing board.")
-nn = NeuralNetwork.load(str(input("Path to network data: ")))
+def load_network():
+    file_path = filedialog.askopenfilename(title="Select network data file", filetypes=[("NPZ files", "*.npz")])
+    nn = NeuralNetwork.load(file_path)
+    return nn
+
 
 class DrawingApp:
     def __init__(self, master):
         self.master = master
-        self.master.title("PAPAPA")
+        self.master.title("Digit Recognizer")
+
 
         self.canvas = Canvas(master, width=280, height=280, bg="white")
         self.canvas.pack()
@@ -80,6 +86,9 @@ class DrawingApp:
         plt.imshow(np.array(resized_image) / 255.0, cmap='gray')
 
 if __name__ == "__main__":
+    # Call the function to load the network
+    nn = load_network()
     root = tk.Tk()
+    
     app = DrawingApp(root)
     root.mainloop()
